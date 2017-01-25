@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RealmAndroid</string>
+    <string name="app_name">MeWeather</string>
     <string name="base_url">http://api.openweathermap.org/data/2.5/</string>
     <string name="nodata">No Data Yet</string>
     <string name="nodatatemp">No Temp Yet</string>

@@ -2,14 +2,21 @@ package com.realm.nikiizvorski.realmandroid.mvp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.realm.nikiizvorski.realmandroid.R;
 import com.realm.nikiizvorski.realmandroid.di.appComponet.AppComponent;
 import com.realm.nikiizvorski.realmandroid.di.app.WeatherApp;
 import com.realm.nikiizvorski.realmandroid.di.weatherComponent.DaggerWeatherComponent;
 import com.realm.nikiizvorski.realmandroid.di.weatherComponent.WeatherModule;
 import com.realm.nikiizvorski.realmandroid.realm.WeatherRealm;
+import com.realm.nikiizvorski.realmandroid.util.ImageHandler;
 import com.realm.nikiizvorski.realmandroid.util.NetworkUtils;
 
 import javax.inject.Inject;
@@ -17,22 +24,13 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * The type Main activity.
- */
-public class MainActivity extends AppCompatActivity implements MainView{
-    /**
-     * The Main presenter.
-     */
+public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener{
     @Inject MainPresenter mainPresenter;
-    /**
-     * The City.
-     */
     @Bind(R.id.name) TextView city;
-    /**
-     * The Degree.
-     */
     @Bind(R.id.degree) TextView degree;
+    @Bind(R.id.imageView) ImageView background;
+    @Bind(R.id.editText) EditText editText;
+    @Bind(R.id.request) Button req;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Override
     public void initViews() {
         ButterKnife.bind(this);
+        req.setOnClickListener(this);
     }
 
     @Override
@@ -69,14 +68,32 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     @Override
     public void checkTemp(WeatherRealm realm) {
-        if (realm != null && realm.getTemp() > 0) degree.setText(String.valueOf(realm.getTemp()));
-        else degree.setText(R.string.nodatatemp);
+        if (realm != null && realm.getTemp() > 0) {
+            degree.setText(String.valueOf(realm.getTemp()));
+
+            setBackgroundWeather(realm);
+
+        } else {
+            degree.setText(R.string.nodatatemp);
+        }
+    }
+
+    @Override
+    public void setBackgroundWeather(WeatherRealm realm) {
+        if(realm.getTemp() > 2){
+            Glide.with(this).load(R.drawable.sun).asGif().into(background);
+        } else {
+            Glide.with(this).load(R.drawable.rain).asGif().into(background);
+        }
     }
 
     @Override
     public void checkName(WeatherRealm realm) {
-        if(realm != null && !realm.getName().isEmpty()) city.setText(realm.getName());
-        else city.setText(R.string.nodata);
+        if(realm != null && !realm.getName().isEmpty()) {
+            city.setText(realm.getName());
+        } else {
+            city.setText(R.string.nodata);
+        }
     }
 
     @Override
@@ -86,12 +103,22 @@ public class MainActivity extends AppCompatActivity implements MainView{
         super.onDestroy();
     }
 
-    /**
-     * Gets app component.
-     *
-     * @return the app component
-     */
     protected AppComponent getAppComponent() {
         return ((WeatherApp) getApplication()).getAppComponent();
+    }
+
+    @Override
+    public void onClick(View v) {
+        String city = String.valueOf(editText.getText());
+
+        if(city != null && !city.isEmpty()){
+            if (NetworkUtils.isNetAvailable(this)) {
+                if (mainPresenter.getRealm() != null && !mainPresenter.getRealm().isEmpty()) {
+                    mainPresenter.getWeather(city);
+                } else {
+                    mainPresenter.getWeatherFromRealm(city);
+                }
+            } else mainPresenter.getWeatherFromRealm(city);
+        }
     }
 }
