@@ -9,8 +9,14 @@ import com.realm.nikiizvorski.realmandroid.di.appComponet.DaggerAppComponent;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+/**
+ * The type Weather app.
+ */
 public class WeatherApp extends Application{
 
+    /**
+     * The App component.
+     */
     AppComponent appComponent;
 
     @Override
@@ -30,6 +36,11 @@ public class WeatherApp extends Application{
        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this, "http://api.openweathermap.org/data/2.5/")).build();
     }
 
+    /**
+     * Gets app component.
+     *
+     * @return the app component
+     */
     public AppComponent getAppComponent() {
         return appComponent;
     }

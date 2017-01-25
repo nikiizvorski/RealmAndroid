@@ -12,19 +12,62 @@ import rx.Subscription;
  */
 public interface MainPresenter {
 
+    /**
+     * Gets weather.
+     *
+     * @param city the city
+     */
     void getWeather(String city);
 
+    /**
+     * Gets weather from realm.
+     *
+     * @param city the city
+     */
     void getWeatherFromRealm(String city);
 
+    /**
+     * Gets realm.
+     *
+     * @return the realm
+     */
     Realm getRealm();
 
+    /**
+     * Find in realm weather realm.
+     *
+     * @param realm the realm
+     * @param name  the name
+     * @return the weather realm
+     */
     WeatherRealm findInRealm(Realm realm, String name);
 
+    /**
+     * On destroy.
+     */
     void onDestroy();
 
+    /**
+     * Subscribe subscription.
+     *
+     * @param <T>        the type parameter
+     * @param observable the observable
+     * @param observer   the observer
+     * @return the subscription
+     */
     <T> Subscription subscribe(Observable<T> observable, Observer<T> observer);
 
+    /**
+     * Check name.
+     *
+     * @param realm the realm
+     */
     void checkName(WeatherRealm realm);
 
+    /**
+     * Check temp.
+     *
+     * @param realm the realm
+     */
     void checkTemp(WeatherRealm realm);
 }

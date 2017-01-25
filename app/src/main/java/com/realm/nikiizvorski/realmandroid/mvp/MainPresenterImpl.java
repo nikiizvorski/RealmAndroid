@@ -15,12 +15,30 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+/**
+ * The type Main presenter.
+ */
 public class MainPresenterImpl implements MainPresenter, Observer<WeatherResponse> {
+    /**
+     * The constant TAG.
+     */
     public static final String TAG = MainPresenterImpl.class.getSimpleName();
+    /**
+     * The Main view.
+     */
     @Inject MainView mainView;
+    /**
+     * The Weather service.
+     */
     @Inject WeatherService weatherService;
     private Subscription subscription;
 
+    /**
+     * Instantiates a new Main presenter.
+     *
+     * @param mainView       the main view
+     * @param weatherService the weather service
+     */
     @Inject
     public MainPresenterImpl(MainView mainView, WeatherService weatherService) {
         this.mainView = mainView;

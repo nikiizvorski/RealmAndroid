@@ -12,11 +12,24 @@ import dagger.Component;
 import retrofit2.Retrofit;
 
 
+/**
+ * The interface App component.
+ */
 @Singleton
 @Component(modules = AppModule.class)
 public interface AppComponent {
 
+    /**
+     * Expose retrofit retrofit.
+     *
+     * @return the retrofit
+     */
     Retrofit exposeRetrofit();
 
+    /**
+     * Expose context context.
+     *
+     * @return the context
+     */
     Context exposeContext();
 }

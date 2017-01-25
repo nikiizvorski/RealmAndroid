@@ -17,9 +17,21 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * The type Main activity.
+ */
 public class MainActivity extends AppCompatActivity implements MainView{
+    /**
+     * The Main presenter.
+     */
     @Inject MainPresenter mainPresenter;
+    /**
+     * The City.
+     */
     @Bind(R.id.name) TextView city;
+    /**
+     * The Degree.
+     */
     @Bind(R.id.degree) TextView degree;
 
     @Override
@@ -74,6 +86,11 @@ public class MainActivity extends AppCompatActivity implements MainView{
         super.onDestroy();
     }
 
+    /**
+     * Gets app component.
+     *
+     * @return the app component
+     */
     protected AppComponent getAppComponent() {
         return ((WeatherApp) getApplication()).getAppComponent();
     }
