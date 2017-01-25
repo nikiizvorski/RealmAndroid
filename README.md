@@ -29,6 +29,10 @@ Project not Running?
 
 - Check everything maybe you got some configs on your Android Studio version wrong. I am using 2.2 right now.
 
+Project work?
+
+- added simple edit text and some buttons and changeble gif background not to be that simple ^^
+
 Project Structure? Updated for the latest 2.8 libs
 
 - Component and Module -> Dagger2 -> DI
@@ -77,6 +81,10 @@ created are not working.
 - There are a lot of more in-depth infos about realm of their website, it is very well documented and have everything there.
 
 - There are a lot of similarities with Firebase as you can see.
+
+Project link:
+
+
 
 #### Author
 
