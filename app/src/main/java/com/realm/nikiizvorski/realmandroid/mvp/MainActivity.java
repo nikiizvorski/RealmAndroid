@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void setBackgroundWeather(WeatherRealm realm) {
-        if(realm.getTemp() > 2){
+        if(realm.getTemp() > 3){
             Glide.with(this).load(R.drawable.sun).asGif().into(background);
         } else {
             Glide.with(this).load(R.drawable.rain).asGif().into(background);
