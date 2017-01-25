@@ -36,6 +36,10 @@ Project Structure? Updated for the latest 2.8 libs
 - Activity -> View Layer
 - Realm and Model classes -> Model Layer
 
+Documentation?
+
+- The prject is documented and you can remove that with a simple Android Studio Plugin if you don't want the documentation.
+
 Removed transitions?
 
 - Yes there is no need for any animations that's why we remove them completely. Any diffrence between this and a fragment? Answer that one by yourself.
@@ -69,6 +73,8 @@ created are not working.
 - Realm doesn't allow relations as it should and it wants always a primaryKey. You can see in this project how we handled this.
 
 - Other than that almoust every big company out there is working with Realm there are a lot big names and probably Google too.
+
+- There are a lot of more in-depth infos about realm of their website, it is very well documented and have everything there.
 
 - There are a lot of similarities with Firebase as you can see.
 
