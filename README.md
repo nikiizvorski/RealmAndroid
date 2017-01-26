@@ -21,6 +21,8 @@ Pointer?
 
 - This project need to be changed from Rx1 to Rx2 which will not be that ard just read the forked project that i have and check the official documentation on RxJava - RxAndroid repo and you will find all you need to know. A lot stuff have being removed and changed. It is totally rewriten seems like for the better.
 
+- Change to Rx2 well you can just implement Observer from the new lib and just subscribe(this) for the observable.
+
 What can be better and what not?
 
 - The Project is made like this on purpose and it is just a sample to get you started with Realm and all the other libs.
