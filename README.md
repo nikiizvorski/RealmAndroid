@@ -17,6 +17,10 @@ Rx Subscription is already handled here but in future if you use it unsubscribe 
 
 since you will understand what will happen if you don't :) simply your observable will just push or request data while there is none.
 
+Pointer?
+
+- This project need to be changed from Rx1 to Rx2 which will not be that ard just read the forked project that i have and check the official documentation on RxJava - RxAndroid repo and you will find all you need to know. A lot stuff have being removed and changed. It is totally rewriten seems like for the better.
+
 What can be better and what not?
 
 - The Project is made like this on purpose and it is just a sample to get you started with Realm and all the other libs.
