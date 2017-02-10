@@ -1,23 +1,28 @@
 package com.realm.nikiizvorski.realmandroid.mvp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.realm.nikiizvorski.realmandroid.R;
-import com.realm.nikiizvorski.realmandroid.di.appComponet.AppComponent;
 import com.realm.nikiizvorski.realmandroid.di.app.WeatherApp;
+import com.realm.nikiizvorski.realmandroid.di.appComponet.AppComponent;
 import com.realm.nikiizvorski.realmandroid.di.weatherComponent.DaggerWeatherComponent;
 import com.realm.nikiizvorski.realmandroid.di.weatherComponent.WeatherModule;
 import com.realm.nikiizvorski.realmandroid.realm.WeatherRealm;
-import com.realm.nikiizvorski.realmandroid.util.ImageHandler;
 import com.realm.nikiizvorski.realmandroid.util.NetworkUtils;
+
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import javax.inject.Inject;
 
@@ -26,11 +31,14 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener{
     @Inject MainPresenter mainPresenter;
-    @Bind(R.id.name) TextView city;
-    @Bind(R.id.degree) TextView degree;
-    @Bind(R.id.imageView) ImageView background;
-    @Bind(R.id.editText) EditText editText;
-    @Bind(R.id.request) Button req;
+    @Bind(R.id.timeLabel) TextView time;
+    @Bind(R.id.temperatureLabel) TextView degree;
+    @Bind(R.id.iconImageView) ImageView background;
+    @Bind(R.id.summaryLabel) TextView weatherDesc;
+    @Bind(R.id.humidityValue) TextView hummididty;
+    @Bind(R.id.precipValue) TextView percentWind;
+    @Bind(R.id.locationLabel) EditText editText;
+    @Bind(R.id.refreshImageView) ImageView req;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,37 +70,40 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void weatherShow(WeatherRealm realm){
-        mainPresenter.checkName(realm);
         mainPresenter.checkTemp(realm);
     }
 
     @Override
     public void checkTemp(WeatherRealm realm) {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
+        Date currentLocalTime = cal.getTime();
+        DateFormat date = new SimpleDateFormat("HH:mm a");
+        date.setTimeZone(TimeZone.getTimeZone("GMT+0:00"));
+        String localTime = date.format(currentLocalTime);
+
+        time.setText("At " + localTime + " it will be");
         if (realm != null && realm.getTemp() > 0) {
+            setBackground(realm);
             degree.setText(String.valueOf(realm.getTemp()));
+            weatherDesc.setText(String.valueOf(realm.getMain()));
+            hummididty.setText(String.valueOf(realm.getHummidity()));
+            percentWind.setText(String.valueOf(realm.getWindSpeed()));
 
-            setBackgroundWeather(realm);
-
-        } else {
-            degree.setText(R.string.nodatatemp);
         }
     }
 
     @Override
-    public void setBackgroundWeather(WeatherRealm realm) {
-        if(realm.getTemp() > 3){
-            Glide.with(this).load(R.drawable.sun).asGif().into(background);
-        } else {
-            Glide.with(this).load(R.drawable.rain).asGif().into(background);
-        }
-    }
-
-    @Override
-    public void checkName(WeatherRealm realm) {
-        if(realm != null && !realm.getName().isEmpty()) {
-            city.setText(realm.getName());
-        } else {
-            city.setText(R.string.nodata);
+    public void setBackground(WeatherRealm realm) {
+        if (realm.getMain().toLowerCase().contains("sun")){
+            background.setImageDrawable(ContextCompat.getDrawable(this, R.mipmap.sunny));
+        } else if (realm.getMain().toLowerCase().contains("snow")){
+            background.setImageDrawable(ContextCompat.getDrawable(this, R.mipmap.snow));
+        } else if (realm.getMain().toLowerCase().contains("cloud")){
+            background.setImageDrawable(ContextCompat.getDrawable(this, R.mipmap.cloudy));
+        } else if (realm.getMain().toLowerCase().contains("rain")){
+            background.setImageDrawable(ContextCompat.getDrawable(this, R.mipmap.rain));
+        } else if (realm.getMain().toLowerCase().contains("fog")){
+            background.setImageDrawable(ContextCompat.getDrawable(this, R.mipmap.fog));
         }
     }
 

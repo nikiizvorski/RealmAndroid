@@ -37,12 +37,5 @@ public interface MainView {
      */
     void checkTemp(WeatherRealm realm);
 
-    void setBackgroundWeather(WeatherRealm realm);
-
-    /**
-     * Check name.
-     *
-     * @param realm the realm
-     */
-    void checkName(WeatherRealm realm);
+    void setBackground(WeatherRealm realm);
 }

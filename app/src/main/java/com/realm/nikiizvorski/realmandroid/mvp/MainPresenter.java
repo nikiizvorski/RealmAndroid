@@ -58,13 +58,6 @@ public interface MainPresenter {
     <T> Subscription subscribe(Observable<T> observable, Observer<T> observer);
 
     /**
-     * Check name.
-     *
-     * @param realm the realm
-     */
-    void checkName(WeatherRealm realm);
-
-    /**
      * Check temp.
      *
      * @param realm the realm

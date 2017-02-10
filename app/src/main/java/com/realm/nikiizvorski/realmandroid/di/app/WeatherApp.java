@@ -1,6 +1,8 @@
 package com.realm.nikiizvorski.realmandroid.di.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.realm.nikiizvorski.realmandroid.di.appComponet.AppComponent;
 import com.realm.nikiizvorski.realmandroid.di.appComponet.AppModule;

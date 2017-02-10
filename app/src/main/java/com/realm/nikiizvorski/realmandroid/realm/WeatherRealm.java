@@ -9,7 +9,10 @@ import io.realm.annotations.PrimaryKey;
 public class WeatherRealm extends RealmObject {
     @PrimaryKey
     private String name;
+    private String main;
+    private Integer hummidity;
     private Double temp;
+    private Double windSpeed;
 
     /**
      * Gets name.
@@ -45,5 +48,29 @@ public class WeatherRealm extends RealmObject {
      */
     public void setTemp(Double temp) {
         this.temp = temp;
+    }
+
+    public String getMain() {
+        return main;
+    }
+
+    public void setMain(String main) {
+        this.main = main;
+    }
+
+    public Integer getHummidity() {
+        return hummidity;
+    }
+
+    public void setHummidity(Integer hummidity) {
+        this.hummidity = hummidity;
+    }
+
+    public void setWindSpeed(Double windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public Double getWindSpeed() {
+        return windSpeed;
     }
 }
